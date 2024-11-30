@@ -9,15 +9,20 @@ use Illuminate\Http\JsonResponse;
 class CsvController extends Controller
 {
     public function index(): JsonResponse
-    {
-        $files = Storage::files(); // Obtiene todos los archivos en storage/app.
-        $csvFiles = array_filter($files, fn($file) => pathinfo($file, PATHINFO_EXTENSION) === 'csv');
+{
+    $files = Storage::files('app');
+    $csvFiles = array_filter($files, fn($file) => pathinfo($file, PATHINFO_EXTENSION) === 'csv');
 
-        return response()->json([
-            'mensaje' => 'Listado de ficheros',
-            'contenido' => array_values($csvFiles), // Devuelve solo archivos CSV.
-        ], 200);
-    }
+    // Extraer solo los nombres de archivo sin la ruta
+    $fileNames = array_map(function($file) {
+        return str_replace('app/', '', $file); // Elimina 'app/' del nombre
+    }, array_values($csvFiles));
+
+    return response()->json([
+        'mensaje' => 'Listado de ficheros',
+        'contenido' => $fileNames,
+    ], 200);
+}
 
     public function store(Request $request): JsonResponse
     {

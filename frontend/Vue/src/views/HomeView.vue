@@ -5,6 +5,30 @@
     </header>
     <section>
       <div class="container">
+        <!-- CSV Box -->
+        <div class="box">
+          <h2>CSV</h2>
+          <input v-model="filename" type="text" placeholder="Enter filename" />
+          <textarea v-model="inputData" placeholder="Enter content"></textarea>
+          <button @click="getCsvFiles">Get Files (CSV)</button>
+          <button @click="storeCsvFile">Store (CSV)</button>
+          <button @click="showCsvFile">Show (CSV)</button>
+          <button @click="updateCsvFile">Update (CSV)</button>
+          <button @click="deleteCsvFile">Delete (CSV)</button>
+        </div>
+
+        <!-- JSON Box -->
+        <div class="box">
+          <h2>JSON</h2>
+          <input v-model="filename" type="text" placeholder="Enter filename" />
+          <textarea v-model="inputData" placeholder="Enter content"></textarea>
+          <button @click="getJsonFiles">Get Files (JSON)</button>
+          <button @click="storeJsonFile">Store (JSON)</button>
+          <button @click="showJsonFile">Show (JSON)</button>
+          <button @click="updateJsonFile">Update (JSON)</button>
+          <button @click="deleteJsonFile">Delete (JSON)</button>
+        </div>
+
         <!-- Class Storage Box -->
         <div class="box">
           <h2>Class Storage</h2>
@@ -16,33 +40,9 @@
           <button @click="updateClassStorageFile">Update (Hello)</button>
           <button @click="deleteClassStorageFile">Delete (Hello)</button>
         </div>
-
-     <!-- JSON Box -->
-     <div class="box">
-      <h2>JSON</h2>
-      <input v-model="filename" type="text" placeholder="Enter filename" />
-      <textarea v-model="inputData" placeholder="Enter content"></textarea>
-      <button @click="getJsonFiles">Get Files (JSON)</button>
-      <button @click="storeJsonFile">Store (JSON)</button>
-      <button @click="showJsonFile">Show (JSON)</button>
-      <button @click="updateJsonFile">Update (JSON)</button>
-      <button @click="deleteJsonFile">Delete (JSON)</button>
-    </div>
-
-    <!-- CSV Box -->
-    <div class="box">
-      <h2>CSV</h2>
-      <input v-model="filename" type="text" placeholder="Enter filename" />
-      <textarea v-model="inputData" placeholder="Enter content"></textarea>
-      <button @click="getCsvFiles">Get Files (CSV)</button>
-      <button @click="storeCsvFile">Store (CSV)</button>
-      <button @click="showCsvFile">Show (CSV)</button>
-      <button @click="updateCsvFile">Update (CSV)</button>
-      <button @click="deleteCsvFile">Delete (CSV)</button>
-    </div>
-  </div>
-  <textarea readonly>{{ JSON.stringify(response, null, 2) }}</textarea>
-</section>
+      </div>
+      <textarea readonly>{{ JSON.stringify(response, null, 2) }}</textarea>
+    </section>
   </main>
 </template>
 
@@ -289,7 +289,6 @@ const deleteClassStorageFile = async () => {
   }
 };
 </script>
-
 <style scoped>
 main {
   display: flex;
@@ -297,60 +296,119 @@ main {
   align-items: center;
   font-family: Arial, sans-serif;
   padding: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff0f5;
 }
 
 header h1 {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #db7093;
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 section {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  width: 100%;
 }
 
 .container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
   gap: 2rem;
+  width: 100%;
 }
 
 .box {
-  border: 1px solid #ddd;
-  padding: 1rem;
-  width: 300px;
-  text-align: center;
+  flex: 1;
+  border: 1px solid #ffc0cb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(219, 112, 147, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.box:hover {
+  transform: translateY(-5px);
 }
 
 h2 {
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  color: #c71585;
+  text-align: center;
+  font-weight: bold;
 }
 
 input, textarea {
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.75rem;
   margin-bottom: 1rem;
+  border: 2px solid #ffb6c1;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #db7093;
+  box-shadow: 0 0 0 3px rgba(219, 112, 147, 0.1);
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
 }
 
 button {
   width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-  border: 1px solid #007bff;
-  background-color: #007bff;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  border: none;
+  background-color: #db7093;
   color: white;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  font-weight: 500;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #c71585;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(219, 112, 147, 0.2);
+}
+
+button:active {
+  transform: translateY(0);
 }
 
 textarea[readonly] {
   width: 100%;
   height: 200px;
-  margin-top: 2rem;
+  margin-top: 1rem;
+  background-color: #fff0f5;
+  border: 2px solid #ffb6c1;
+  border-radius: 8px;
+  font-family: monospace;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+  }
+  
+  .box {
+    width: 100%;
+  }
 }
 </style>
