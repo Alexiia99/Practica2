@@ -43,39 +43,59 @@ class CsvController extends Controller
     }
 
     public function show(string $id)
-    {
-        // Ruta del archivo en el almacenamiento
-        $path = "app/{$id}";
+{
+    $path = "app/{$id}";
+
+    if (!Storage::exists($path)) {
+        return response()->json(['mensaje' => 'Fichero no encontrado'], 404);
+    }
+
+    $content = Storage::get($path);
     
-        // Verificar si el archivo existe
-        if (!Storage::exists($path)) {
-            return response()->json(['mensaje' => 'Fichero no encontrado'], 404);
-        }
+    // Convert content to array (supporting both \n and \r\n)
+    $rows = preg_split('/\r\n|\n/', trim($content));
     
-        // Leer el contenido del archivo
-        $content = Storage::get($path);
-    
-        // Dividir el contenido en líneas
-        $lines = explode("\n", trim($content));
-    
-        // Validar que haya datos en el archivo
-        if (count($lines) < 2) {
-            return response()->json([
-                'mensaje' => 'El fichero no contiene datos válidos',
-                'contenido' => [],
-            ]);
-        }
-    
-        // Procesar encabezados y filas
-        $headers = str_getcsv(array_shift($lines)); // Primera línea como encabezados
-        $data = array_map(fn($line) => array_combine($headers, str_getcsv($line)), $lines);
-    
-        // Retornar la respuesta en formato JSON
+    if (empty($rows)) {
         return response()->json([
-            'mensaje' => 'Fichero leído con éxito',
-            'contenido' => $data,
+            'mensaje' => 'El fichero está vacío',
+            'contenido' => []
         ]);
     }
+
+    $data = [];
+    foreach ($rows as $row) {
+        // Handle quoted values and commas within quotes
+        preg_match_all('/"([^"]*)"|(([^,]*))/', $row, $matches);
+        $fields = [];
+        foreach ($matches[0] as $match) {
+            $field = trim($match, '"');
+            if ($field !== '') {
+                $fields[] = $field;
+            }
+        }
+        if (!empty($fields)) {
+            $data[] = $fields;
+        }
+    }
+
+    if (count($data) < 2) {
+        return response()->json([
+            'mensaje' => 'El fichero no contiene datos válidos',
+            'contenido' => []
+        ]);
+    }
+
+    // First row as headers, rest as data
+    $headers = array_shift($data);
+    $formattedData = array_map(function($row) use ($headers) {
+        return array_combine($headers, array_pad($row, count($headers), ''));
+    }, $data);
+
+    return response()->json([
+        'mensaje' => 'Fichero leído con éxito',
+        'contenido' => $formattedData
+    ]);
+}
     
 
 
