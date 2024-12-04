@@ -1,13 +1,13 @@
-1. git clone y el link de el repositorio https
-2. abrimos la terminal guake
-4. entrar en la carpeta con los comandos cd por la teminal
-3.vamos a la carpeta frontend/Vue
-4.abrimos la terminal de visual studio code
-5.ejecutamos npm install
-6.ejecutamos npx vite --version (para verificar las version que este instalada)
-7.ejecutamos npm install vite --save-dev (instalacion global)
-8.ejecutamos npm run dev
-9.en otra terminal ejecutamos
-10.composer install
-11.ejecutamos php artisan serve
-12.entramos al localhost http://localhost:5173/
+// ¿QUÉ HACER PARA QUE TODO FUNCIONE? //
+
+- En primer lugar deberás hacer un git clone del repositorio.
+- A continuación abrimos la terminal guake y nos movemos con el comando cd hasta estar introducirnos dentro de la carpeta que hemos clonado.
+- Una vez dentro, habrán dos subcarpetas (Frontend y Backend), deberemos navegar hasta la carpeta Frontend/Vue.
+- En esa carpeta ejecutamos Code . Para abrir con el Visual Studio Code.
+- Dentro de code abrimos un nuevo terminal, donde ejecutaremos npm install.
+- Posteriormente ejecutamos npx vite --version (Para verificar que está instalado) y seguidamente npm install vite --save-dev (para hacer la instalación global).
+- Cuando esté todo instalado, ejecutamos npm run dev.
+- En otra terminal (abrimos otra terminal con code) entramos en la carpeta de backend.
+- Una vez dentro, ejecutamos composer install (Suele estar instalado, pero así nos aseguramos de que no de fallos).
+- A continuación, ejecutamos php artisan serve (para que el servidor esté en funcionamiento con los controllers que hay en la carpeta)
+- Finalmente, entramos al localhost http://localhost:5173/
