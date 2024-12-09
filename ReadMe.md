@@ -1,13 +1,37 @@
-// ¿QUÉ HACER PARA QUE TODO FUNCIONE? //
 
-- En primer lugar deberás hacer un git clone del repositorio.
-- A continuación abrimos la terminal guake y nos movemos con el comando cd hasta estar introducirnos dentro de la carpeta que hemos clonado.
-- Una vez dentro, habrán dos subcarpetas (Frontend y Backend), deberemos navegar hasta la carpeta frontend/Vue.
-- En esa carpeta ejecutamos Code . Para abrir con el Visual Studio Code.
-- Dentro de code abrimos un nuevo terminal, donde ejecutaremos npm install.
-- Posteriormente ejecutamos npx vite --version (Para verificar que está instalado) y seguidamente npm install vite --save-dev (para hacer la instalación global).
-- Cuando esté todo instalado, ejecutamos npm run dev.
-- En otra terminal (abrimos otra terminal con code) entramos en la carpeta de backend.
-- Una vez dentro, ejecutamos composer install (Suele estar instalado, pero así nos aseguramos de que no de fallos).
-- A continuación, ejecutamos php artisan serve (para que el servidor esté en funcionamiento con los controllers que hay en la carpeta)
-- Finalmente, entramos al localhost http://localhost:5173/
+/// CONFIGURACIÓN DEL PROYECTO ///
+
+REQUISITOS PREVIOS:
+
+- Node.js y npm instalados
+- Composer instalado
+- npx vite instalado (Verificar con: npx vite --version)
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+INSTRUCCIONES DE INSTALACIÓN:
+
+Frontend (en una terminal Bash) :
+git clone https://github.com/Alexiia99/Practica2.git
+cd Practica2/frontend/Vue
+npm install
+npm install vite --save-dev
+
+Backend (en una terminal Bash):
+cd ../backend
+composer install
+cp .env.example .env
+php artisan key:generate
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+EJECUCIÓN DEL PROYECTO:
+
+Iniciar Frontend (en una terminal Bash):
+cd frontend/Vue
+npm run dev
+
+Iniciar Backend (en una terminal Bash):
+cd backend
+php artisan serve
+
+El proyecto estará disponible en: http://localhost:5173/
